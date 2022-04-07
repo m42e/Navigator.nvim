@@ -75,6 +75,9 @@ Following options can be given when calling `setup({config})`. Below is the defa
     -- 'auto' - Chooses mux based on priority (default)
     -- table - Custom mux to use
     mux = 'auto'
+
+    -- Moving left on the left-most nvim pane will move to the last pane and vice versa
+    circular_movement = false
 }
 ```
 
