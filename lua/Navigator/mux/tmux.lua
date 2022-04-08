@@ -59,4 +59,26 @@ function Tmux:navigate(direction)
     return self
 end
 
+---To check whether only one tmux pane exists in a direction
+---@param direction string
+---@return boolean
+function Tmux:single_pane(direction, disable_on_zoom)
+    -- Check if only one tmux pane exists
+    if self.execute("display-message -p '#{window_panes}'") == '1' then
+        return true
+    end
+
+    -- Check if tmux pane is zoomed
+    if self:zoomed() and disable_on_zoom then
+        return true
+    end
+
+    -- Compare dimensions of the tmux pane and tmux window in direction
+    if direction == 'h' or direction == 'l' then
+        return self.execute("display-message -p '#{pane_width}'") == self.execute("display-message -p '#{window_width}'")
+    elseif direction == 'j' or direction == 'k' then
+        return self.execute("display-message -p '#{pane_height}'") == self.execute("display-message -p '#{window_height}'")
+    end
+end
+
 return Tmux
