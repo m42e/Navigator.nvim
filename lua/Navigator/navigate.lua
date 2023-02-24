@@ -109,10 +109,10 @@ function N.navigate(direction)
         local save = N.config.auto_save
         if save == 'current' then
             if vim.fn.expand('%') ~= '' then
-              cmd('update')
+              vim.cmd('update')
             end
         elseif save == 'all' then
-            cmd('silent! wall')
+            vim.cmd{ cmd = 'wall', bang = true, mods={silent=true, emsg_silent=true} }
         end
 
         N.last_pane = true
